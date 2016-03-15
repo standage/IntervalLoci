@@ -2,3 +2,4 @@ species
 scratch
 setup
 .*.swp
+.ipynb_checkpoints/
