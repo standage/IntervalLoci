@@ -7,9 +7,6 @@ import re
 import sys
 
 
-def avg(values):
-    return sum(values) / len(values)
-
 parser = argparse.ArgumentParser()
 parser.add_argument('--species', metavar='SPEC', help='optional species label')
 parser.add_argument('-l', '--length', metavar='LEN', default=1000000, type=int,
@@ -50,16 +47,20 @@ for line in args.gff3:
         milocus_space[seqid] += efflen
         milocus_gene_count[seqid] += genecount
 
+if(args.species):
+    print('Species', end='\t')
+print('AvgPercOcc', 'AvgPercGene', sep='\t')
 perc_occ = list()
 perc_gene = list()
 for seqid in milocus_space:
     if total_space[seqid] < args.length:
         continue
-    perc_occ.append(milocus_space[seqid] / total_space[seqid])
-    perc_gene.append(milocus_gene_count[seqid] / total_gene_count[seqid])
-if(args.species):
-    print('Species', end='\t')
-print('AvgPercOcc', 'AvgPercGene', sep='\t')
-if(args.species):
-    print(args.species, end='\t')
-print('{:.4f}\t{:.4f}'.format(avg(perc_occ), avg(perc_gene)))
+    if args.species in ['Mmus', 'Hsap'] and ('NW_' in seqid or 'NT_' in seqid):
+        continue
+    po = milocus_space[seqid] / total_space[seqid]
+    pg = milocus_gene_count[seqid] / total_gene_count[seqid]
+    perc_occ.append(po)
+    perc_gene.append(pg)
+    if(args.species):
+        print(args.species, end='\t')
+    print('{:.4f}\t{:.4f}\t{}'.format(po, pg, seqid))
