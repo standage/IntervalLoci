@@ -11,7 +11,8 @@ def avg(values):
     return sum(values) / len(values)
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-l', '--length', metavar='LEN', default=1000000,
+parser.add_argument('--species', metavar='SPEC', help='optional species label')
+parser.add_argument('-l', '--length', metavar='LEN', default=1000000, type=int,
                     help='length threshold; default is 1000000 (1 Mb)')
 parser.add_argument('gff3', type=argparse.FileType('r'), help='miLocus GFF3')
 args = parser.parse_args()
@@ -56,5 +57,9 @@ for seqid in milocus_space:
         continue
     perc_occ.append(milocus_space[seqid] / total_space[seqid])
     perc_gene.append(milocus_gene_count[seqid] / total_gene_count[seqid])
+if(args.species):
+    print('Species', end='\t')
 print('AvgPercOcc', 'AvgPercGene', sep='\t')
+if(args.species):
+    print(args.species, end='\t')
 print('{:.4f}\t{:.4f}'.format(avg(perc_occ), avg(perc_gene)))
