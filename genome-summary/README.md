@@ -1,6 +1,6 @@
 # Summary of ten model organism genomes
 
-[GenHub](https://standage.github.io/genhub) version [0.3.2](https://github.com/standage/genhub/releases/tag/0.3.2) was used to retrieve genome assemblies and annotations for ten model organisms from [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/), pre-process the data, compute iLoci, and compile summary statistics over the data.
+[GenHub](https://standage.github.io/genhub) version [0.3.4](https://github.com/standage/genhub/releases/tag/0.3.4) was used to retrieve genome assemblies and annotations for ten model organisms from [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/), pre-process the data, compute iLoci, and compile summary statistics over the data.
 
 ```bash
 genhub-build.py --cfgdir=config/ \
@@ -8,6 +8,20 @@ genhub-build.py --cfgdir=config/ \
                 --numprocs=10 \
                 --batch=modorg \
                 download format prepare stats
+```
+
+A table giving a breakdown of iLocus counts by type was produced with the following command.
+
+```bash
+for species in Scer Cele Crei Mtru Dmel Agam Xtro Drer Mmus Hsap
+do
+    echo ""
+    echo -n $species$'\t'
+    perl -ne 'm/iLocus_type=([^;\n]+)/ and print "$1\n"' < species/${species}/${species}.iloci.gff3 \
+        | sort \
+        | uniq -c \
+        | tr '\n' '\t'
+done
 ```
 
 The custom Python script `ilocus_summary.py` was used to generate summary tables for piLoci, niLoci, iiLoci, and miLoci.
