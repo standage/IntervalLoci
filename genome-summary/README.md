@@ -10,19 +10,19 @@ genhub-build.py --cfgdir=config/ \
                 download format prepare stats
 ```
 
-A table giving a breakdown of iLocus counts by type was produced with the following command.
+A summary of iLocus composition for these genomes was computed with the following commands.
 
 ```bash
-for species in Scer Cele Crei Mtru Dmel Agam Xtro Drer Mmus Hsap
+for species in Scer Cele Crei Mtru Agam Dmel Xtro Drer Mmus Hsap
 do
-    echo ""
-    echo -n $species$'\t'
-    perl -ne 'm/iLocus_type=([^;\n]+)/ and print "$1\n"' < species/${species}/${species}.iloci.gff3 \
-        | sort \
-        | uniq -c \
-        | tr '\n' '\t'
+    files="$files species/$species/$species.iloci.tsv"
 done
+./ilocus_counts.py --outfmt=tex $files
 ```
+
+--------
+
+## Old notes
 
 The custom Python script `ilocus_summary.py` was used to generate summary tables for piLoci, niLoci, iiLoci, and miLoci.
 

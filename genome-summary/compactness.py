@@ -49,7 +49,7 @@ for line in args.gff3:
 
 if(args.species):
     print('Species', end='\t')
-print('AvgPercOcc', 'AvgPercGene', sep='\t')
+print('AvgPercOcc', 'AvgPercGene', 'SeqID', sep='\t')
 perc_occ = list()
 perc_gene = list()
 for seqid in milocus_space:
