@@ -15,4 +15,5 @@ Summaries of iLocus composition for these genomes were computed with the followi
 ```bash
 genhub-ilocus-summary.py --outfmt=tex Scer Cele Crei Mtru Agam Dmel Xtro Drer Mmus Hsap
 genhub-pilocus-summary.py --outfmt=tex Scer Cele Crei Mtru Agam Dmel Xtro Drer Mmus Hsap
+genhub-milocus-summary.py --outfmt=tex Scer Cele Crei Mtru Agam Dmel Xtro Drer Mmus Hsap
 ```
