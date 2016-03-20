@@ -1,6 +1,6 @@
 # Summary of ten model organism genomes
 
-[GenHub](https://standage.github.io/genhub) version [0.3.4](https://github.com/standage/genhub/releases/tag/0.3.4) was used to retrieve genome assemblies and annotations for ten model organisms from [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/), pre-process the data, compute iLoci, and compile summary statistics over the data.
+[GenHub](https://standage.github.io/genhub) version [0.3.7](https://github.com/standage/genhub/releases/tag/0.3.7) was used to retrieve genome assemblies and annotations for ten model organisms from [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/), pre-process the data, compute iLoci, and compile summary statistics over the data.
 
 ```bash
 genhub-build.py --cfgdir=config/ \
