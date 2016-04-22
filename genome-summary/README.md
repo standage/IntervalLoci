@@ -10,10 +10,9 @@ genhub-build.py --cfgdir=config/ \
                 download format prepare stats
 ```
 
-Summaries of iLocus composition for these genomes were computed with the following commands.
+Summaries of iLocus composition for these genomes, corresponding to Tables 1 and 2 in the manuscript, were computed with the following commands.
 
 ```bash
 genhub-ilocus-summary.py --outfmt=tex Scer Cele Crei Mtru Agam Dmel Xtro Drer Mmus Hsap
 genhub-pilocus-summary.py --outfmt=tex Scer Cele Crei Mtru Agam Dmel Xtro Drer Mmus Hsap
-genhub-milocus-summary.py --outfmt=tex Scer Cele Crei Mtru Agam Dmel Xtro Drer Mmus Hsap
 ```
