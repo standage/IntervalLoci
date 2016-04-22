@@ -3,17 +3,15 @@
 [GenHub](https://standage.github.io/genhub) version [0.3.7](https://github.com/standage/genhub/releases/tag/0.3.7) was used to retrieve genome assemblies and annotations for ten model organisms from [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/), pre-process the data, compute iLoci, and compile summary statistics over the data.
 
 ```bash
-genhub-build.py --cfgdir=config/ \
-                --workdir=species/ \
+genhub-build.py --workdir=species/ \
                 --numprocs=10 \
-                --batch=modorg \
+                --genome=Scer,Cele,Crei,Mtru,Agam,Dmel,Xtro,Drer,Mmus,Hsap \
                 download format prepare stats
 ```
 
-Summaries of iLocus composition for these genomes were computed with the following commands.
+Summaries of iLocus composition for these genomes, corresponding to Tables 1 and 2 in the manuscript, were computed with the following commands.
 
 ```bash
 genhub-ilocus-summary.py --outfmt=tex Scer Cele Crei Mtru Agam Dmel Xtro Drer Mmus Hsap
 genhub-pilocus-summary.py --outfmt=tex Scer Cele Crei Mtru Agam Dmel Xtro Drer Mmus Hsap
-genhub-milocus-summary.py --outfmt=tex Scer Cele Crei Mtru Agam Dmel Xtro Drer Mmus Hsap
 ```
