@@ -11,7 +11,7 @@ genhub-compact.py --length=1000000 --iqnt=0.95 --gqnt=0.05 \
 
 The (phi, sigma) values were also computed for four genomes for which both community and NCBI/RefSeq annotations are available.
 A single (phi, sigma) value was reported for each genome, computed as the average (centroid) of all (phi, sigma) values for that species.
-For any species with (phi, sigma) values with a distance from the centroid that exceeds 2.25 times the average distance from the centroid, these outliers are removed and the centroid is recomputed.
+For any genome with (phi, sigma) values whose distance from the centroid exceeds 2.25 times the average (phi, sigma) distance from the centroid, these outliers are removed and the centroid is recomputed.
 
 ```bash
 genhub-compact.py --centroid=2.25 --length=1000000 --iqnt=0.95 --gqnt=0.05 \
