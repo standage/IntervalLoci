@@ -20,3 +20,5 @@ genhub-compact.py --shuffled --centroid=2.25 --length=1000000 --iqnt=0.95 --gqnt
                   Scer Cele Crei Mtru Agam Dmel Xtro Drer Mmus Hsap \
     > phisigma-modorg-shuffled-centroids.tsv
 ```
+
+See [shuffling.ipynb](shuffling.ipynb) for visualizations of these data.
