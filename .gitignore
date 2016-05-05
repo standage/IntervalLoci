@@ -1,4 +1,6 @@
 data/
+data-delta300/
+data-delta750/
 .ipynb_checkpoints/
 *.swp
 scratch/
