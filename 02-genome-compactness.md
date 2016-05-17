@@ -74,6 +74,32 @@ genhub-compact.py --workdir=data-delta750/ --centroid=2.25 --length=1000000 \
     > phisigma-refr-delta750.tsv
 ```
 
+## Random gene arrangement
+
+To investigate whether gene clustering occurs more frequently than expected by chance, we computed random arrangments of genes and re-computed iLoci and associated statistics for comparison.
+
+```bash
+cd shuffle/
+parallel --gnu --jobs=10 bash shuffle.sh {} ::: Scer Cele Crei Mtru Agam Dmel Xtro Drer Mmus Hsap
+cd ..
+
+# Table 4 from the manuscript
+genhub-milocus-summary.py --shuffled --workdir=sdata/ --outfmt=tex \
+                          Scer Cele Crei Mtru Agam Dmel Xtro Drer Mmus Hsap
+```
+
+The (φ, σ) values of genome compactness were computed for the shuffled data for comparison with the observed data.
+Centroids were computed for each genome, as described above.
+
+```bash
+genhub-compact.py --workdir=data/ --centroid=2.25 --length=1000000 --iqnt=0.95 --gqnt=0.05 \
+                  Scer Cele Crei Mtru Agam Dmel Xtro Drer Mmus Hsap \
+    > phisigma-modorg-centroids.tsv
+genhub-compact.py --workdir=data/ --shuffled --centroid=2.25 --length=1000000 --iqnt=0.95 --gqnt=0.05 \
+                  Scer Cele Crei Mtru Agam Dmel Xtro Drer Mmus Hsap \
+    > phisigma-modorg-centroids-shuffled.tsv
+```
+
 ## Figures
 
 See [02-genome-compactness.ipynb](02-genome-compactness.ipynb) for visualizations of these data.

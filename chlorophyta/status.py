@@ -2,21 +2,8 @@
 from __future__ import print_function
 import argparse
 import glob
+import sys
 
-
-iloc2prot = dict()
-mapfiles = list(glob.glob('species/*/*.protein2ilocus.txt'))
-repfiles = list(glob.glob('species/*/*.protids.txt'))
-for mapfile, repfile in zip(mapfiles, repfiles):
-    with open(mapfile, 'r') as mapstream, open(repfile, 'r') as repstream:
-        reps = dict()
-        for line in repstream:
-            protid = line.strip()
-            reps[protid] = True
-        for line in mapstream:
-            protid, locusid = line.strip().split('\t')
-            if protid in reps:
-                iloc2prot[locusid] = protid
 
 chlorophytes = ['Apro', 'Crei', 'Cvar', 'Csub', 'Mcom', 'Mpus', 'Oluc', 'Otau', 'Vcar']
 
@@ -51,12 +38,28 @@ class HiLocus(object):
 
 def get_parser():
     parser = argparse.ArgumentParser()
+    parser.add_argument('-w', '--workdir', default='species',
+                        help='workidng directory')
     parser.add_argument('hiloci', type=argparse.FileType('r'),
                         help='hilocus data table')
     return parser
 
 
 def main(args):
+    iloc2prot = dict()
+    mapfiles = list(glob.glob(args.workdir + '/*/*.protein2ilocus.txt'))
+    repfiles = list(glob.glob(args.workdir + '/*/*.protids.txt'))
+    for mapfile, repfile in zip(mapfiles, repfiles):
+        with open(mapfile, 'r') as mapstream, open(repfile, 'r') as repstream:
+            reps = dict()
+            for line in repstream:
+                protid = line.strip()
+                reps[protid] = True
+            for line in mapstream:
+                protid, locusid = line.strip().split('\t')
+                if protid in reps:
+                    iloc2prot[locusid] = protid
+
     hilocus_count = 0
     print('hiLocus', 'iLocus', 'Status', 'Species', 'Protein', sep='\t')
     for line in args.hiloci:

@@ -12,7 +12,7 @@ We then use a custom Python script to assign each iLocus a provisional status ba
 ```bash
 cd chlorophyta
 genhub-build.py --cfgdir=config/ --batch=chlorophyta+ \
-                --workdir=../data/ --numprocs=4 \
+                --workdir=data-algae/ --numprocs=4 \
                 download format prepare stats cluster
 python status.py GenHub.hiloci.tsv > Chlorophyta.hiLocus.pre-status.tsv
 ```
@@ -25,13 +25,11 @@ Most of these *Unmatched* iLoci will indeed encode *bona fide* protein products 
 This post-processing procedure will distinguish these initially unmatched iLoci from iLoci that have no reliable matches in other species, the former being relabeled as *Matched* and the latter being relabeled as *Orphan*.
 
 ```bash
-cd chlorophyta/
-
 # Build BLAST search index
 mkdir blastdbs
-for species in Apro Crei Csub Cvar Mpus Msrc Oluc Otau Vcar 
+for species in Apro Crei Csub Cvar Mpus Msrc Oluc Otau Vcar Atha Bdis Mtru Osat
 do
-    makeblastdb -in species/${species}/${species}.prot.fa -dbtype prot -parse_seqids
+    makeblastdb -in data-algae/${species}/${species}.prot.fa -dbtype prot -parse_seqids
 done
 
 for species in Apro Crei Csub Cvar Mpus Msrc Oluc Otau Vcar
@@ -41,14 +39,14 @@ do
         | grep $species \
         | cut -f 5 \
         > blastdbs/${species}.unmatched.txt
-    blastdbcmd -db species/${species}/${species}.prot.fa \
+    blastdbcmd -db data-algae/${species}/${species}.prot.fa \
                -entry_batch blastdbs/${species}.unmatched.txt \
         > blastdbs/${species}.unmatched.fa
 
     # Compose a database of proteins from all species except this one
     blastdb_aliastool -title ${species} \
                       -out blastdbs/${species} \
-                      -dblist_file <(ls species/*/????.prot.fa | grep -v $species) \
+                      -dblist_file <(ls data-algae/*/????.prot.fa | grep -v $species) \
                       -dbtype prot
 
     # Execute the BLAST search
@@ -79,9 +77,9 @@ Finally, we use custom Python scripts to compute a breakdown of each species, fo
 See [notebook.ipynb](notebook.ipynb) for the code used to plot these breakdowns.
 
 ```bash
-python breakdown.py <(cat species/*/*.iloci.tsv) Chlorophyta.hiLocus.status.tsv \
+python breakdown.py <(cat data-algae/*/*.iloci.tsv) Chlorophyta.hiLocus.status.tsv \
     > Chlorophyta-breakdown-bp.tsv
-python breakdown.py --counts <(cat species/*/*.iloci.tsv) \
+python breakdown.py --counts <(cat data-algae/*/*.iloci.tsv) \
                     Chlorophyta.hiLocus.status.tsv \
     > Chlorophyta-breakdown-counts.tsv
 ```
@@ -93,6 +91,6 @@ We examined the functional annotations of proteins encoded by highly conserved p
 ```bash
 for pid in $(grep HighlyConserved Chlorophyta.hiLocus.status.tsv | grep Crei | cut -f 5)
 do
-    grep $pid species/Crei/Crei.all.prot.fa
+    grep $pid data-algae/Crei/Crei.all.prot.fa
 done > deflines-HighlyConserved.txt
 ```
