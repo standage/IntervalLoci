@@ -20,10 +20,10 @@ genhub-compact.py --workdir=data/ --length=1000000 \
 To evaluate the robustness of the (φ, σ) measures with respect to annotation source, we also computed (φ, σ) values on four social insect genomes for which both community and NCBI/RefSeq annotations are available.
 
 ```bash
-genhub-build.py --workdir=data/
-                --numprocs=4 \
-                --genome=Amel,Am32,Dqua,Dqcr,Pcan,Pccr,Pdom,Pdtl \
-                download format prepare stats
+fidibus --workdir=data/ \
+        --numprocs=4 \
+        --refr=Amel,Am32,Dqua,Dqcr,Pcan,Pccr,Pdom,Pdtl \
+        download prep iloci breakdown stats
 ```
 
 When computing (φ, σ) values for these genomes, the same filters for outliers described above were appled.
@@ -42,17 +42,17 @@ genhub-compact.py --workdir=data/ --centroid=2.25 --length=1000000
 To evaluate the robustness of the (φ, σ) measures with respect to the δ (delta) parameter, we recomputed iLoci at δ=300 and δ=750 for comparison with the default δ=500.
 
 ```bash
-genhub-build.py --workdir=data-delta300/
-                --numprocs=4 \
-                --delta=300
-                --genome=Scer,Cele,Crei,Mtru,Agam,Dmel,Xtro,Drer,Mmus,Hsap \
-                download format prepare stats
+fidibus --workdir=data-delta300/ \
+        --numprocs=4 \
+        --delta=300 \
+        --refr=Scer,Cele,Crei,Mtru,Agam,Dmel,Xtro,Drer,Mmus,Hsap \
+        download prep iloci breakdown stats
 
-genhub-build.py --workdir=data-delta750/
-                --numprocs=4 \
-                --delta=750
-                --genome=Scer,Cele,Crei,Mtru,Agam,Dmel,Xtro,Drer,Mmus,Hsap \
-                download format prepare stats
+fidibus --workdir=data-delta750/ \
+        --numprocs=4 \
+        --delta=750 \
+        --refr=Scer,Cele,Crei,Mtru,Agam,Dmel,Xtro,Drer,Mmus,Hsap \
+        download prep iloci breakdown stats
 ```
 
 Centroid (φ, σ) values were then computed for each value of δ for comparison.

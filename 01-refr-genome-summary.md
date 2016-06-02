@@ -4,7 +4,7 @@ We selected a diverse set of 10 model organisms to demonstrate the utility of iL
 
 ## Data retrieval, processing
 
-The `genhub-build.py` script was used to perform the following tasks.
+The `fidibus` script was used to perform the following tasks.
 
 - retrieve genome assemblied and annotations from [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/) (the `download` task)
 - pre-process the data (the `format` task)
@@ -12,10 +12,10 @@ The `genhub-build.py` script was used to perform the following tasks.
 - compile tables of summary statistics over the data (the `stats` task)
 
 ```bash
-genhub-build.py --workdir=data/
-                --numprocs=4 \
-                --genome=Scer,Cele,Crei,Mtru,Agam,Dmel,Xtro,Drer,Mmus,Hsap \
-                download format prepare stats
+fidibus --workdir=data/ \
+        --numprocs=4 \
+        --refr=Scer,Cele,Crei,Mtru,Agam,Dmel,Xtro,Drer,Mmus,Hsap \
+        download prep iloci breakdown stats
 ```
 
 This command could take up to an hour to run: go enjoy lunch or read a paper while you wait!
@@ -24,7 +24,7 @@ However, the mammalian genomes each take on the order of 30 minutes, so that's a
 
 ## Output data
 
-The `genhub-build.py` command creates a directory called `data/` containing 10 subdirectories, each dedicated to a specific genome.
+The `fidibus` command creates a directory called `data/` containing 10 subdirectories, each dedicated to a specific genome.
 These subdirectories store many intermediate and ancillary data files that will likely be of limited interest to most users.
 However, several data files should be of great interest.
 

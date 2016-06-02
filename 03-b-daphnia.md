@@ -4,12 +4,16 @@
 
 ```bash
 # Daphnia files must be downloaded manually
-# https://github.com/standage/genhub/blob/master/docs/DPUL.md
-genhub-build.py --workdir=data/ --genome=Turt download
-genhub-build.py --workdir=data/
-                --numprocs=2 \
-                --genome=Dpul,Turt \
-                format prepare stats
+# http://genome.jgi.doe.gov/Dappu1/Dappu1.download.ftp.html
+fidibus --workdir=data/ \
+        --numprocs=2 \
+        --refr=Turt \
+        --local \
+        --label=Dpul \
+        --gdna=Daphnia_pulex.fasta.gz \
+        --gff3=FrozenGeneCatalog20110204.gff3.gz \
+        --prot=FrozenGeneCatalog20110204.proteins.fasta.gz \
+        download prep iloci breakdown stats
 ```
 
 ## Summary
