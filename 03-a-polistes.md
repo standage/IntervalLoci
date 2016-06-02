@@ -11,10 +11,10 @@ genhub-milocus-summary.py --workdir=data/ --outfmt=tex Pdom
 ## Compactness
 
 ```bash
-genhub-build.py --workdir=data/
-                --numprocs=3 \
-                --genome=Aech,Amel,Nvit \
-                download format prepare stats
+fidibus --workdir=data/ \
+        --numprocs=3 \
+        --refr=Aech,Amel,Nvit \
+        download prep iloci breakdown stats
 genhub-compact.py --workdir=data/ --length=2000000 \
                   --iqnt=0.95 --gqnt=0.05 \
                   Amel Agam Aech Dmel Pdom Nvit \
@@ -27,14 +27,15 @@ Definitely increase `--numprocs` for these steps if your machine is capable.
 
 ```bash
 # Skip several previously downloaded genomes
-genhub-build.py --workdir=data/ --numprocs=4 \ 
-                --genome=Acep,Ador,Aflo,Bimp,Bter,Cbir,Cflo,Hsal,Lhum,Mrot,Pbar,Sinv,Tcas \
-                download format prepare stats
+fidibus --workdir=data/ --numprocs=4 \
+        --refr=Acep,Ador,Aflo,Bimp,Bter,Cbir,Cflo,Hsal,Lhum,Mrot,Pbar,Sinv,Tcas \
+        download prep iloci breakdown stats
 
 cd pdom/r1.2/
-genhub-build.py --workdir=../../data/ --numprocs=4 \
-                --genome=Acep,Ador,Aech,Aflo,Amel,Bimp,Bter,Cbir,Cflo,Dmel,Dqua,Hsal,Lhum,Mrot,Nvit,Pbar,Pcan,Pdtl,Sinv,Tcas \
-                cluster
+fidibus --workdir=../../data/ \
+        --numprocs=4 \
+        --refr=Acep,Ador,Aech,Aflo,Amel,Bimp,Bter,Cbir,Cflo,Dmel,Dqua,Hsal,Lhum,Mrot,Nvit,Pbar,Pcan,Pdtl,Sinv,Tcas \
+        cluster
 ../conserved.py --workdir=../../data/ GenHub.hiloci.tsv Amel Bter Cflo Hsal Pcan Pdtl Nvit \
     > hiloci-conserved-r1.2.tsv
 ../breakdown.py --counts <(cat ../../data/*/*.iloci.tsv) \
@@ -45,9 +46,10 @@ genhub-build.py --workdir=../../data/ --numprocs=4 \
     > breakdown-bp-r1.2.tsv
 
 cd ../refseq/
-genhub-build.py --workdir=../../data/ --numprocs=4 \
-                --genome=Acep,Ador,Aech,Aflo,Amel,Bimp,Bter,Cbir,Cflo,Dmel,Dqua,Hsal,Lhum,Mrot,Nvit,Pbar,Pcan,Pdom,Sinv,Tcas \
-                cluster
+fidibus --workdir=../../data/ \
+        --numprocs=4 \
+        --refr=Acep,Ador,Aech,Aflo,Amel,Bimp,Bter,Cbir,Cflo,Dmel,Dqua,Hsal,Lhum,Mrot,Nvit,Pbar,Pcan,Pdom,Sinv,Tcas \
+        cluster
 ../conserved.py --workdir=../../data/ GenHub.hiloci.tsv Amel Bter Cflo Hsal Pcan Pdtl Nvit \
     > hiloci-conserved-refseq.tsv
 ../breakdown.py --counts <(cat ../../data/*/*.iloci.tsv) \
