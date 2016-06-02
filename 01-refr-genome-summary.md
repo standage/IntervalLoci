@@ -7,8 +7,9 @@ We selected a diverse set of 10 model organisms to demonstrate the utility of iL
 The `fidibus` script was used to perform the following tasks.
 
 - retrieve genome assemblied and annotations from [NCBI RefSeq](http://www.ncbi.nlm.nih.gov/refseq/) (the `download` task)
-- pre-process the data (the `format` task)
-- compute iLoci and extract sequences for various feature types (the `prepare` task)
+- pre-process the data (the `prep` task)
+- compute iLoci (the `iloci` task)
+- collate sequences and annotations for various feature types (the `breakdown` task)
 - compile tables of summary statistics over the data (the `stats` task)
 
 ```bash
