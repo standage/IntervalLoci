@@ -1,6 +1,6 @@
 # Evaluating gene models by transcript support
 
-The [GAEVAL integrity score][integrity] measures how much a gene model is or is not supported by available trancript evidence.
+The [GAEVAL integrity score][integrity] measures the extent to which a gene model is or is not supported by available trancript evidence.
 The integrity score integrates exon coverage, structural accuracy, and UTR length, with 1.0 representing complete support and 0.0 representing a complete lack of support.
 
 Here we use the GAEVAL integrity score to assess the genome annotation of the paper wasp *Polistes dominula* published by NCBI RefSeq.
@@ -10,9 +10,9 @@ Here we use the GAEVAL integrity score to assess the genome annotation of the pa
 The procedure for data access and processing is implemented in `workflow.sh`.
 
 - Transcript shotgun assemblies (TSAs) are downloaded directly from NCBI's TSA FTP site.
-- The *Polistes dominula* reference genome is downloaded using [genhub][genhub]
+- The *Polistes dominula* reference genome is downloaded using the `fidibus` command ([genhub][genhub])
 - The transcripts are aligned to the reference genome using [GeneSeqer][gsq]
-- The integrity scores are computed using the [AEGeAn Toolkit][agn]
+- The integrity scores are computed using the `gaeval` command ([AEGeAn Toolkit][agn])
 
 ## Results
 
