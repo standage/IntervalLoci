@@ -36,10 +36,10 @@ do_gaeval()
         2> >(grep -v 'has not been previously introduced')
 }
 
-#fidibus -p 4 --refr=Pdom,Pdtl,Pcan,Pccr download prep iloci breakdown stats
-#download_tsa pcan ftp://ftp.ncbi.nlm.nih.gov/sra/wgs_aux/GA/FR/GAFR01/GAFR01.1.fsa_nt.gz
-#download_tsa pdom ftp://ftp.ncbi.nlm.nih.gov/sra/wgs_aux/GE/DB/GEDB01/GEDB01.1.fsa_nt.gz
+fidibus -p 2 --refr=Pdom,Pcan download prep
+download_tsa pcan ftp://ftp.ncbi.nlm.nih.gov/sra/wgs_aux/GA/FR/GAFR01/GAFR01.1.fsa_nt.gz
+download_tsa pdom ftp://ftp.ncbi.nlm.nih.gov/sra/wgs_aux/GE/DB/GEDB01/GEDB01.1.fsa_nt.gz
 align Pcan
-#align Pdom
+align Pdom
 do_gaeval Pcan
-#do_gaeval Pdom
+do_gaeval Pdom
