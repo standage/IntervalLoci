@@ -1,28 +1,45 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-# 1. Download transcripts
-curl ftp://ftp.ncbi.nlm.nih.gov/sra/wgs_aux/GE/DB/GEDB01/GEDB01.1.fsa_nt.gz \
-    | gunzip -c \
-    | perl -ne 's/>gb\|([^\|]+)\|/>$1/; print' \
-    > ${spec}-tsa.fa
+download_tsa()
+{
+    local spec=$1
+    local url=$2
+    curl $url \
+        | gunzip -c \
+        | perl -ne 's/>gb\|([^\|]+)\|/>$1/; print' \
+        > ${spec}-tsa.fa
+}
 
-# 2. Download genome
-fidibus -p 2 --refr=Pdom,Pdtl download prep iloci breakdown stats
-
-# 3. Splice align transcripts to genome
-MakeArray pdom-tsa.fa
-mpirun -np 8 \
+align()
+{
+    local speclabel=$1
+    local spec=$(echo $speclabel | tr '[:upper:]' '[:lower:]')
+    MakeArray ${spec}-tsa.fa
+    mpirun -np 8 \
     GeneSeqerMPIl -s Arabidopsis \
-                  -L species/Pdom/Pdom.gdna.fa \
-                  -D pdom-tsa.fa \
-                  -O pdom-vs-pdom.gsq \
+                  -L species/${speclabel}/${speclabel}.gdna.fa \
+                  -D ${spec}-tsa.fa \
+                  -O ${spec}.gsq \
                   -p prmfileHQ -x 30 -y 45 -z 60 -w 0.8 -m 1000000 \
-                  > pdom-vs-pdom.log 2>&1
+                  > ${spec}-gsq.log 2>&1
+}
 
-# 4. Compute integrity scores
-./gsq2makergff3.py < pdom-vs-pdom.gsq > pdom-vs-pdom.gff3
-gaeval pdom-vs-pdom.gff3 species/Pdom/Pdom.iloci.gff3 \
-    --tsv pdom-vs-pdom-gaeval.tsv \
-    > pdom-vs-pdom-gaeval.gff3 \
-    2> >(grep -v 'has not been previously introduced')
+do_gaeval()
+{
+    local speclabel=$1
+    local spec=$(echo $speclabel | tr '[:upper:]' '[:lower:]')
+    ./gsq2makergff3.py < ${spec}.gsq > ${spec}-gsq.gff3
+    gaeval ${spec}-gsq.gff3 species/${speclabel}/${speclabel}.iloci.gff3 \
+        --tsv ${spec}-gaeval.tsv \
+        > ${spec}-gaeval.gff3 \
+        2> >(grep -v 'has not been previously introduced')
+}
+
+#fidibus -p 4 --refr=Pdom,Pdtl,Pcan,Pccr download prep iloci breakdown stats
+#download_tsa pcan ftp://ftp.ncbi.nlm.nih.gov/sra/wgs_aux/GA/FR/GAFR01/GAFR01.1.fsa_nt.gz
+#download_tsa pdom ftp://ftp.ncbi.nlm.nih.gov/sra/wgs_aux/GE/DB/GEDB01/GEDB01.1.fsa_nt.gz
+align Pcan
+#align Pdom
+do_gaeval Pcan
+#do_gaeval Pdom
